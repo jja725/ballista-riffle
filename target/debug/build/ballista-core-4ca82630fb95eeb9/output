@@ -1,0 +1,5 @@
+cargo:rerun-if-env-changed=FORCE_REBUILD
+cargo:rustc-env=RUSTC_VERSION=1.92.0
+cargo:rerun-if-changed=proto/datafusion_common.proto
+cargo:rerun-if-changed=proto/datafusion.proto
+cargo:rerun-if-changed=proto/ballista.proto

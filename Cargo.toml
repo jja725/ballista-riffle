@@ -1,0 +1,28 @@
+[package]
+name = "ballista-riffle"
+description = "Riffle (Uniffle) remote shuffle service extension for Apache Ballista"
+license = "Apache-2.0"
+version = "0.1.0"
+edition = "2024"
+repository = "https://github.com/jja725/ballista-riffle"
+
+[features]
+testcontainers = ["dep:testcontainers"]
+
+[dependencies]
+arrow = { version = "58", features = ["ipc_compression"] }
+dashmap = "6.1"
+log = "0.4"
+prost = "0.14"
+testcontainers = { version = "0.27", optional = true }
+tokio = { version = "1", features = ["rt", "macros", "time"] }
+tonic = "0.14"
+tonic-prost = "0.14"
+
+[dev-dependencies]
+env_logger = "0.11"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+[build-dependencies]
+tonic-build = { version = "0.14", default-features = false, features = ["transport"] }
+tonic-prost-build = "0.14"
