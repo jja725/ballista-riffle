@@ -1,1 +1,0 @@
-{"rustc":18415816196306954164,"features":"","declared_features":"","target":0,"profile":0,"path":0,"deps":[[704166101058882960,"build_script_build",false,6494840771668485143]],"local":[{"RerunIfChanged":{"output":"debug/build/ballista-riffle-4c312af15a760389/output","paths":["proto/uniffle.proto"]}}],"rustflags":[],"config":0,"compile_kind":0}
