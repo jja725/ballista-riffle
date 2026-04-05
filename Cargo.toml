@@ -11,7 +11,12 @@ testcontainers = ["dep:testcontainers"]
 
 [dependencies]
 arrow = { version = "58", features = ["ipc_compression"] }
+async-trait = "0.1"
+ballista-core = { git = "https://github.com/jja725/datafusion-ballista.git", branch = "worktree-riffle-shuffle" }
+ballista-executor = { git = "https://github.com/jja725/datafusion-ballista.git", branch = "worktree-riffle-shuffle", default-features = false }
 dashmap = "6.1"
+datafusion = "53"
+futures = "0.3"
 log = "0.4"
 prost = "0.14"
 testcontainers = { version = "0.27", optional = true }
