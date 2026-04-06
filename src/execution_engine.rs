@@ -68,6 +68,7 @@ impl ExecutionEngine for RiffleExecutionEngine {
         stage_id: usize,
         plan: Arc<dyn ExecutionPlan>,
         work_dir: &str,
+        _config: &datafusion::prelude::SessionConfig,
     ) -> Result<Arc<dyn QueryStageExecutor>> {
         // Check if this is a shuffle writer plan we should intercept
         if plan.as_any().downcast_ref::<ShuffleWriterExec>().is_some()
@@ -105,7 +106,7 @@ impl ExecutionEngine for RiffleExecutionEngine {
         } else {
             // Fall back to default (local disk) for non-shuffle plans
             self.fallback
-                .create_query_stage_exec(job_id, stage_id, plan, work_dir)
+                .create_query_stage_exec(job_id, stage_id, plan, work_dir, _config)
         }
     }
 }
@@ -315,14 +316,11 @@ impl RiffleQueryStageExec {
 
             results.push(ShuffleWritePartition {
                 partition_id: partition_id as u64,
-                path: format!(
-                    "riffle://{}:{}/{}/{}/{}",
-                    server_host, server_port,
-                    self.config.app_id, shuffle_id, partition_id
-                ),
                 num_batches,
                 num_rows,
                 num_bytes: 0,
+                file_id: None,
+                is_sort_shuffle: false,
             });
 
             debug!(
@@ -404,13 +402,11 @@ impl RiffleQueryStageExec {
 
         Ok(vec![ShuffleWritePartition {
             partition_id: input_partition as u64,
-            path: format!(
-                "riffle://{}:{}/{}/{}/{}",
-                host, port, self.config.app_id, shuffle_id, input_partition
-            ),
             num_batches,
             num_rows,
             num_bytes: 0,
+            file_id: None,
+            is_sort_shuffle: false,
         }])
     }
 }
