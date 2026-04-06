@@ -70,3 +70,53 @@ impl RiffleConfig {
         format!("http://{host}:{port}")
     }
 }
+
+/// Parsed Riffle shuffle path: `riffle://host:port/app_id/shuffle_id/partition_id`
+#[derive(Debug, Clone)]
+pub struct RiffleShufflePath {
+    pub server_host: String,
+    pub server_port: i32,
+    pub app_id: String,
+    pub shuffle_id: i32,
+    pub partition_id: i32,
+}
+
+impl RiffleShufflePath {
+    /// Parse a Riffle shuffle URI from a PartitionLocation path.
+    /// Returns None if the path is not a riffle:// URI.
+    pub fn parse(path: &str) -> Option<Self> {
+        let stripped = path.strip_prefix("riffle://")?;
+        let parts: Vec<&str> = stripped.splitn(2, '/').collect();
+        if parts.len() != 2 {
+            return None;
+        }
+
+        let host_port: Vec<&str> = parts[0].splitn(2, ':').collect();
+        if host_port.len() != 2 {
+            return None;
+        }
+        let server_host = host_port[0].to_string();
+        let server_port = host_port[1].parse().ok()?;
+
+        let rest: Vec<&str> = parts[1].splitn(3, '/').collect();
+        if rest.len() != 3 {
+            return None;
+        }
+        let app_id = rest[0].to_string();
+        let shuffle_id = rest[1].parse().ok()?;
+        let partition_id = rest[2].parse().ok()?;
+
+        Some(Self {
+            server_host,
+            server_port,
+            app_id,
+            shuffle_id,
+            partition_id,
+        })
+    }
+
+    /// Returns true if the path is a riffle:// URI.
+    pub fn is_riffle_path(path: &str) -> bool {
+        path.starts_with("riffle://")
+    }
+}

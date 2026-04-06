@@ -517,7 +517,7 @@ dependencies = [
 [[package]]
 name = "ballista-core"
 version = "53.0.0"
-source = "git+https://github.com/jja725/datafusion-ballista.git?branch=worktree-riffle-shuffle#98c7cd95d2293d6daf144371e180331efee58425"
+source = "git+https://github.com/jja725/datafusion-ballista.git?branch=worktree-riffle-shuffle#4b9f569b51636a7c2a06fce7012a4a40ba79e9f2"
 dependencies = [
  "arrow-flight",
  "async-trait",
@@ -548,7 +548,7 @@ dependencies = [
 [[package]]
 name = "ballista-executor"
 version = "53.0.0"
-source = "git+https://github.com/jja725/datafusion-ballista.git?branch=worktree-riffle-shuffle#98c7cd95d2293d6daf144371e180331efee58425"
+source = "git+https://github.com/jja725/datafusion-ballista.git?branch=worktree-riffle-shuffle#4b9f569b51636a7c2a06fce7012a4a40ba79e9f2"
 dependencies = [
  "arrow",
  "arrow-flight",
@@ -3753,7 +3753,6 @@ dependencies = [
  "cfg-if",
  "libc",
  "psm",
- "windows-sys 0.52.0",
  "windows-sys 0.59.0",
 ]
 

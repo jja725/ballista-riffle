@@ -315,14 +315,14 @@ impl RiffleQueryStageExec {
 
             results.push(ShuffleWritePartition {
                 partition_id: partition_id as u64,
-                path: String::new(),
+                path: format!(
+                    "riffle://{}:{}/{}/{}/{}",
+                    server_host, server_port,
+                    self.config.app_id, shuffle_id, partition_id
+                ),
                 num_batches,
                 num_rows,
-                num_bytes: 0, // approximate
-                remote_shuffle_app_id: self.config.app_id.clone(),
-                remote_shuffle_id: shuffle_id,
-                remote_shuffle_server_host: server_host.clone(),
-                remote_shuffle_server_port: *server_port,
+                num_bytes: 0,
             });
 
             debug!(
@@ -404,14 +404,13 @@ impl RiffleQueryStageExec {
 
         Ok(vec![ShuffleWritePartition {
             partition_id: input_partition as u64,
-            path: String::new(),
+            path: format!(
+                "riffle://{}:{}/{}/{}/{}",
+                host, port, self.config.app_id, shuffle_id, input_partition
+            ),
             num_batches,
             num_rows,
             num_bytes: 0,
-            remote_shuffle_app_id: self.config.app_id.clone(),
-            remote_shuffle_id: shuffle_id,
-            remote_shuffle_server_host: host.clone(),
-            remote_shuffle_server_port: port,
         }])
     }
 }
