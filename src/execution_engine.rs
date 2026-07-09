@@ -33,6 +33,7 @@ use ballista_executor::execution_engine::{
 use datafusion::arrow::datatypes::SchemaRef;
 use datafusion::error::{DataFusionError, Result};
 use datafusion::execution::context::TaskContext;
+use datafusion::prelude::SessionConfig;
 use datafusion::physical_plan::metrics::MetricsSet;
 use datafusion::physical_plan::repartition::BatchPartitioner;
 use datafusion::physical_plan::{ExecutionPlan, Partitioning};
@@ -68,7 +69,7 @@ impl ExecutionEngine for RiffleExecutionEngine {
         stage_id: usize,
         plan: Arc<dyn ExecutionPlan>,
         work_dir: &str,
-        _config: &datafusion::prelude::SessionConfig,
+        _config: &SessionConfig,
     ) -> Result<Arc<dyn QueryStageExecutor>> {
         // Check if this is a shuffle writer plan we should intercept
         if plan.as_any().downcast_ref::<ShuffleWriterExec>().is_some()
